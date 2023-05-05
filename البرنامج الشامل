@@ -1,0 +1,100 @@
+namespace MyProject
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void saveTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                StreamWriter sw = new StreamWriter(@"E:\mydata.txt ");
+                sw.WriteLine(textBox1.Text);
+                sw.Close();
+                MessageBox.Show("Text is save", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void showFileContentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(@"E:\mydata.txt"))
+            {
+                StreamReader SR = new StreamReader(@"E:\mydata.txt");
+                string s = SR.ReadToEnd();
+                SR.Close();
+                MessageBox.Show(s, "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+            {
+                MessageBox.Show("The file is not found", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                StreamWriter sr = new StreamWriter((@"E:\mydata.txt"));
+                for (int i = 0; i <= textBox1.Lines.Length - 1; i++)
+                    sr.WriteLine(textBox1.Lines[i]);
+                sr.Close();
+                MessageBox.Show("the Text is save", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            else
+                MessageBox.Show("you must enter text to save", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string str = "";
+            string s;
+            if (File.Exists(@"E:\mydata.txt"))
+            {
+                StreamReader sr = new StreamReader(@"E:\mydata.txt");
+                while (!sr.EndOfStream)
+                {
+                    s = sr.ReadLine();
+
+                    str = str + s + Environment.NewLine;
+                }
+                sr.Close();
+                textBox2.Text = str;
+            }
+            else
+                MessageBox.Show("File not found", "Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+        }
+
+        private void homeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void enATimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        private void disTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label2.Text = DateTime.Now.ToLongTimeString();
+        }
+    }
+}
